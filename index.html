@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>🎉 Chúc mừng sinh nhật Thúy An 💖</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(-45deg,#ff9a9e,#fad0c4,#fcb69f,#ffecd2);
+    background-size:400% 400%;
+    animation:gradientMove 12s ease infinite;
+  }
+  @keyframes gradientMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  .bokeh{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 20% 30%,rgba(255,255,255,0.25) 0,transparent 40%),
+      radial-gradient(circle at 70% 80%,rgba(255,255,255,0.2) 0,transparent 45%);
+    background-size:200% 200%;
+    animation:bokehMove 20s ease-in-out infinite alternate;
+    z-index:1;
+  }
+  @keyframes bokehMove{
+    0%{background-position:0 0}
+    100%{background-position:100% 100%}
+  }
+
+  .card{
+    position:relative;
+    z-index:5;
+    width:min(900px,90%);
+    background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(10px);
+    border-radius:24px;
+    box-shadow:0 0 30px rgba(255,51,102,0.25);
+    padding:3rem 2rem;
+    text-align:center;
+    animation:fadeIn 1.8s ease forwards;
+  }
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(40px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  h1{
+    font-size:clamp(30px,5vw,60px);
+    color:#ff3366;
+    text-shadow:0 0 25px rgba(255,0,100,0.5);
+    background:linear-gradient(90deg,#ff007f,#ff66b2,#ff99cc);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-size:300% auto;
+    animation:shine 3s linear infinite;
+  }
+  @keyframes shine{
+    0%{background-position:0% center}
+    100%{background-position:200% center}
+  }
+
+  p.lead{
+    color:#444;
+    font-size:18px;
+    margin-top:0.5rem;
+    margin-bottom:1.5rem;
+  }
+
+  /* --- Typewriter Effect --- */
+  .typewriter {
+    display:inline-block;
+    text-align:left;
+    max-width:680px;
+    margin:auto;
+    color:#333;
+    font-size:18px;
+    line-height:1.8;
+    position:relative;
+    white-space:pre-line;
+  }
+  .cursor {
+    display:inline-block;
+    width:2px;
+    height:1.2em;
+    background:#fff;
+    margin-left:3px;
+    animation:blink 0.6s steps(1) infinite;
+    vertical-align:bottom;
+    box-shadow:0 0 5px #fff,0 0 10px #fff;
+  }
+  @keyframes blink {
+    50%{opacity:0}
+  }
+
+  .signature{
+    margin-top:1.2rem;
+    color:#ff3366;
+    font-weight:600;
+    font-style:italic;
+    opacity:0;
+    transition:opacity 1s ease;
+  }
+
+  .balloon{
+    position:absolute;width:50px;height:70px;border-radius:50% 50% 45% 45%;
+    opacity:.9;animation:rise linear infinite;
+    box-shadow:0 6px 20px rgba(0,0,0,0.15);
+    z-index:2;
+  }
+  .balloon::after{
+    content:"";position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
+    width:2px;height:18px;background:rgba(0,0,0,0.25);
+  }
+  @keyframes rise{
+    0%{transform:translateY(110vh) rotate(0deg)}
+    100%{transform:translateY(-30vh) rotate(360deg)}
+  }
+
+  .heart{
+    position:fixed;bottom:-10px;color:#ff3366;font-size:20px;opacity:.85;
+    animation:flyUp 6s ease-in infinite;z-index:3;
+  }
+  @keyframes flyUp{
+    0%{transform:translateY(0) scale(1);opacity:.9}
+    100%{transform:translateY(-110vh) scale(.7);opacity:0}
+  }
+</style>
+</head>
+<body>
+  <div class="bokeh"></div>
+  <div class="card">
+    <h1>💖 Chúc mừng sinh nhật Thúy An 💖</h1>
+    <p class="lead">Cùng xem những lời chúc được "viết ra" bằng trái tim 💕</p>
+
+    <div class="typewriter" id="typewriter"></div><span class="cursor" id="cursor"></span>
+    <div class="signature" id="signature">— Tặng An, từ một người luôn mong An hạnh phúc nhất 💫 —</div>
+  </div>
+
+  <audio id="song" src="./k.mp3" preload="auto" loop></audio>
+
+<script>
+  const text = `Hôm nay là một ngày thật đặc biệt — ngày mà thế giới trở nên tươi đẹp hơn vì có Thúy An 🌸
+Chúc An luôn xinh đẹp, tự tin và hạnh phúc như chính nụ cười của mình 💕
+Mong rằng mọi điều tốt đẹp, ngọt ngào và may mắn nhất sẽ đến với An — không chỉ hôm nay mà là mỗi ngày 🌈
+Hãy luôn mỉm cười nhé, vì nụ cười của An làm mọi thứ quanh mình trở nên ấm áp hơn rất nhiều 💖`;
+
+  const msg = document.getElementById("typewriter");
+  const cursor = document.getElementById("cursor");
+  const sign = document.getElementById("signature");
+  const audio = document.getElementById("song");
+  let i = 0;
+
+  function type() {
+    if (i < text.length) {
+      msg.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 50); // tốc độ gõ
+    } else {
+      cursor.style.display = "none";
+      sign.style.opacity = 1;
+    }
+  }
+
+  // Nhạc và bắt đầu hiệu ứng khi chạm
+  const start = () => {
+    audio.play().catch(()=>{});
+    document.removeEventListener("click", start);
+    document.removeEventListener("touchstart", start);
+    type();
+  };
+  document.addEventListener("click", start);
+  document.addEventListener("touchstart", start);
+
+  // Tim và bóng bay
+  const colors = ['#ff3366','#ff6699','#ff99cc','#ff66b2','#ff3b6f'];
+  const createHeart = () => {
+    const h = document.createElement('div');
+    h.classList.add('heart');
+    h.innerHTML = '💖';
+    h.style.left = Math.random()*100+'vw';
+    h.style.fontSize = 18 + Math.random()*18 + 'px';
+    h.style.animationDuration = 4 + Math.random()*3 + 's';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  };
+  setInterval(createHeart,700);
+
+  const createBalloon = () => {
+    const b = document.createElement('div');
+    b.classList.add('balloon');
+    b.style.background = colors[Math.floor(Math.random()*colors.length)];
+    b.style.left = Math.random()*100+'vw';
+    b.style.animationDuration = (8+Math.random()*8)+'s';
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),20000);
+  };
+  setInterval(createBalloon,1000);
+</script>
+</body>
+</html>
