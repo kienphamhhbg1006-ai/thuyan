@@ -134,6 +134,29 @@
     0%{transform:translateY(0) scale(1);opacity:.9}
     100%{transform:translateY(-110vh) scale(.7);opacity:0}
   }
+
+  /* --- Hướng dẫn click tinh tế --- */
+  .hint {
+    position:fixed;
+    bottom:60px;
+    left:50%;
+    transform:translateX(-50%);
+    color:white;
+    background:rgba(0,0,0,0.35);
+    padding:10px 20px;
+    border-radius:25px;
+    font-size:1rem;
+    font-weight:500;
+    letter-spacing:0.5px;
+    backdrop-filter:blur(6px);
+    box-shadow:0 0 10px rgba(255,255,255,0.3);
+    animation:fadeHint 2.5s ease-in-out infinite;
+    z-index:10;
+  }
+  @keyframes fadeHint{
+    0%,100%{opacity:0.4}
+    50%{opacity:1}
+  }
 </style>
 </head>
 <body>
@@ -145,6 +168,9 @@
     <div class="typewriter" id="typewriter"></div><span class="cursor" id="cursor"></span>
     <div class="signature" id="signature">— Tặng An, từ một người luôn mong An hạnh phúc nhất 💫 —</div>
   </div>
+
+  <!-- Gợi ý bật nhạc -->
+  <div class="hint" id="hint">✨ Nhấn vào bất kỳ đâu để bắt đầu ✨</div>
 
   <audio id="song" src="./k.mp3" preload="auto" loop></audio>
 
@@ -158,30 +184,41 @@ Hãy luôn mỉm cười nhé, vì nụ cười của An làm mọi thứ quanh 
   const cursor = document.getElementById("cursor");
   const sign = document.getElementById("signature");
   const audio = document.getElementById("song");
+  const hint = document.getElementById("hint");
   let i = 0;
 
   function type() {
     if (i < text.length) {
       msg.textContent += text.charAt(i);
       i++;
-      setTimeout(type, 50); // tốc độ gõ
+      setTimeout(type, 50);
     } else {
       cursor.style.display = "none";
       sign.style.opacity = 1;
     }
   }
 
-  // Nhạc và bắt đầu hiệu ứng khi chạm
+  // Khi người dùng click -> bắt đầu nhạc + hiệu ứng
   const start = () => {
+    audio.volume = 0; // Bắt đầu nhỏ
     audio.play().catch(()=>{});
+    // Tăng âm lượng từ từ (fade-in)
+    let vol = 0;
+    const fade = setInterval(()=>{
+      if (vol < 1) { vol += 0.02; audio.volume = vol; }
+      else clearInterval(fade);
+    },120);
+    type();
+    hint.style.transition="opacity 1s ease";
+    hint.style.opacity="0";
+    setTimeout(()=>hint.remove(),1500);
     document.removeEventListener("click", start);
     document.removeEventListener("touchstart", start);
-    type();
   };
   document.addEventListener("click", start);
   document.addEventListener("touchstart", start);
 
-  // Tim và bóng bay
+  // Hiệu ứng tim và bóng bay
   const colors = ['#ff3366','#ff6699','#ff99cc','#ff66b2','#ff3b6f'];
   const createHeart = () => {
     const h = document.createElement('div');
